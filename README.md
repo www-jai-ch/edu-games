@@ -8,7 +8,7 @@ Download html, css and js files into an empty directory and try running `index.h
 The Number-Race-Game was designed for education to learn and memorize the basic math like addition or multiplikation.
 
 ## How It Works
-Evaluate the moving term and hit the result below to make it disapper.
+Evaluate the moving term and hit the result below to make it disapper. Get score for correct answers and incorrect answers are score for the opponent. 
 
 ## What Will I Learn?
 HTML, CSS, and JavaScript.
@@ -16,4 +16,4 @@ HTML, CSS, and JavaScript.
 ## Hints
 
 ## See a demo
-* [memory-game](http://www.jai.ch/de/Zahlenrennen.html)
+* [Number Race Game](http://www.jai.ch/de/Spiele Zahlenrennen.html)
