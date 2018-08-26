@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<head>
+	<title>Zahlenrennen</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" media="screen" href="base.css" />
+<style>
+h1 {
+	text-align: center;
+	margin-top: 0;
+}
+div {
+	font-size: 24px;
+	margin-bottom: 1.5em; 
+	line-height:  2em;
+	background-color: lightblue;
+}
+span {
+	padding: 4px;
+	cursor: pointer;
+}
+.selected {
+	background-color: #00FF00;
+    border: magenta;
+}
+</style>
+</head>
+<body onload="restart(0)">
+
+<h1>Number Race</h1>
+<div>
+<button type="button" onclick="restart(0);">+</button>	
+<button type="button" onclick="restart(1);">-</button>	
+<button type="button" onclick="restart(2);">*</button>
+<button type="button" onclick="restart(3);">/</button>
+<button type="button" onclick="restart(4);">(*)</button>
+<button type="button" onclick="restart(5);">(+)</button>
+<button type="button" onclick="restart(6);">Capitals</button>
+</div>
+
+<script src="base.js"></script>
+<script>
+var myGameArea = {
+	canvas : document.createElement("canvas"),
+	init : function() {
+		this.canvas.width = document.body.clientWidth;
+		this.canvas.height = 100;
+		this.context = this.canvas.getContext("2d");
+
+		this.grd = this.context.createLinearGradient(0, 0, this.canvas.width, 0);
+		this.grd.addColorStop(0, "white");
+		this.grd.addColorStop(1, "blue");
+	},
+	start : function() {
+		this.interval = setInterval(updateGameArea, 20); // speed
+	},
+	stop : function() {
+		clearInterval(this.interval);
+	},
+	clear : function() {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+		// Fill with gradient
+		this.context.fillStyle = this.grd;
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+	}
+}
+
+var aufgedeckt;//dom
+var level = 0;
+var score1 = 0;//own points
+var score2 = 0;//opponent points
+var tmp1; // sky
+var tmp2; // ground
+var myGamePiece;
+var questions=[], answers=[];
+var bList = document.getElementsByTagName('BUTTON');
+
+var h1 = document.createElement("H1");
+var div2 = document.createElement("DIV"); // ground
+
+document.body.appendChild(h1);
+document.body.appendChild(myGameArea.canvas);
+document.body.appendChild(div2);
+
+// class game component
+function component(text) {
+	this.ctx = myGameArea.context;
+	this.ctx.font = "24px Segoe UI";
+	this.width = this.ctx.measureText(text).width+6;
+	this.height = 40;
+	this.x = -60;
+	this.y = 30;
+	this.globalAlpha = 1;
+	this.text = text;
+	this.color = "lightblue";
+	this.update = function(){
+		this.ctx.globalAlpha = this.globalAlpha;
+		this.ctx.fillStyle = this.color;
+		this.ctx.fillRect(this.x, this.y, this.width, this.height);
+
+		this.ctx.fillStyle = "black";
+		this.ctx.fillText(this.text, this.x+3, this.y+30);
+		this.ctx.globalAlpha = 1;
+	}
+}
+
+function updateGameArea() {
+	if (myModal.block()) {
+		return; // suspend
+	}
+	myGameArea.clear();
+	for (var i = myGamePiece.length-1; i > -1 ; i--) {
+		var piece = myGamePiece[i];
+		piece.x += 1;
+		if (piece.globalAlpha<1 && piece.globalAlpha>0) {
+			piece.globalAlpha = Math.max(piece.globalAlpha-0.02,0);
+		}
+//		console.log(piece.globalAlpha);
+		if (piece.x > myGameArea.canvas.clientWidth || piece.globalAlpha <= 0) {
+			myGamePiece.splice(i, 1);
+			if (piece.globalAlpha == 1) { // miss hit remove
+				summe(-eval(piece.text));
+			}
+			aufgabeHinzufuegen();
+		}
+		piece.update();
+	}
+//	console.log('myGamePiece.length:'+myGamePiece.length);
+	fertig();
+}
+
+function randomArray(m,n) {
+	var new_array = [];
+	for (var i=0; i < m; i++) {
+		new_array.push( (i < n ? true : false ) );
+	}
+	shuffle(new_array);
+	return new_array;
+}
+
+function filterRandom(arr,random) {
+//	console.log(arr);
+	var new_array = arr.filter(function(elem, index, self) {
+		return random[index];
+	});
+//	console.log(new_array);
+	return new_array;
+}
+
+function hinzufuegen(str,div) {
+	if (str == null) return;
+
+	var span = document.createElement("SPAN");
+	span.innerHTML = str;
+
+	span.addEventListener('click', zeigen);
+	div.appendChild(span);
+	div.appendChild(document.createTextNode(' '));
+}
+
+function aufgabeHinzufuegen() {
+	if (myGamePiece.length==0 && tmp1.length>0) {
+		aufgedeckt = new component(tmp1.pop());
+		myGamePiece.push(aufgedeckt);
+	}
+}
+
+function fertig(){
+	if (myGamePiece.length==0) {
+		var bonus = (1+level)*100;
+		level = (level+1)%bList.length;
+		myModal.display(bonus+" extra Bonus ***<br/>Weiter mit Level "+(level+1));
+		summe(bonus);
+		restart(level);
+	}
+}
+
+function summe(punkte) {
+	if (punkte>0)  {
+		score1 += punkte
+	} else {
+		score2 += -punkte
+	}
+	h1.innerHTML = score1 + " : " + score2;
+}
+
+function q_and_a(q,a){
+	questions.push(q);
+	answers.push(a);
+}
+
+function newGame() {
+	aufgedeckt = null; //dom
+	tmp1 = [];
+	tmp2 = [];
+	questions = [], answers = [];
+	myGamePiece = [];
+
+	removeAllChildren(div2);
+	
+	if (level==0) {
+		for (var a=4; a<20; a++) {
+			for (var b=4; b<20; b++) {
+				tmp1.push(a + "+" + b);
+				tmp2.push((a + b));
+			}
+		}
+	} else if (level==1) {
+		for (var a=4; a<20; a++) {
+			for (var b=4; b<20; b++) {
+				tmp1.push((a + b) + "-" + b);
+				tmp2.push(a);
+			}
+		}
+	} else if (level==2) {
+		for (var a=3; a<=12; a++) {
+			for (var b=3; b<=12; b++) {
+				tmp1.push(a + "*" + b);
+				tmp2.push((a * b));
+			}
+		}
+	} else if (level==3) {
+		for (var a=3; a<=12; a++) {
+			for (var b=3; b<=12; b++) {
+				tmp1.push((a*b) + "÷" + b);
+				tmp2.push(a);
+			}
+		}
+	} else if (level==4) {
+		for (var a=3; a<=12; a++) {
+			for (var b=3; b<=12; b++) {
+				tmp1.push((a * b)+"");
+				tmp2.push(a + "*" + b);
+			}
+		}
+	} else if (level==5) {
+		for (var a=3; a<=12; a++) {
+			for (var b=3; b<=12; b++) {
+				tmp1.push((a + b)+"");
+				tmp2.push(a + "+" + b);
+			}
+		}
+	} else if (level==6) {
+		// list by size
+		q_and_a("Moskow"     ,"Russia");
+		q_and_a("Toronto"    ,"Canada");
+		q_and_a("Bejing"     ,"China");
+		q_and_a("Washington" ,"United States of America");
+		q_and_a("Brasilia"   ,"Brazil");
+		q_and_a("Canberra"   ,"Australia");
+		q_and_a("New Deli"   ,"India");
+		q_and_a("Buenos Aires","Argentina");
+		q_and_a("Astana"      ,"Kazakhstan");
+		q_and_a("Algiers"     ,"Algeria");
+		q_and_a("Kinshasa"	  ,"Democratic Republic of the Congo");
+		q_and_a("Copenhagen"  ,"Kingdom of Denmark");//including greenland
+		q_and_a("Riyadh"	  ,"Saudi Arabia");
+		q_and_a("Mexico City" ,"Mexico");
+		q_and_a("Jakarta"	  ,"Indonesia");
+		q_and_a("Khartoum"	  ,"Sudan");
+		q_and_a("Tripoli"	  ,"Libya");
+		q_and_a("Tehran"	  ,"Iran");
+		q_and_a("Ulaanbaatar" ,"Mongolia");
+		// skip
+		q_and_a("Paris"		,"France");
+		q_and_a("Berlin"	,"Germany");
+		q_and_a("Rome"		,"Italy");
+		
+		tmp1 = questions.slice();
+		tmp2 = answers.slice();
+	}
+
+	var ra = randomArray(tmp1.length,20);
+	tmp1 = filterRandom(tmp1,ra);
+	tmp2 = filterRandom(tmp2,ra);
+
+	shuffle(tmp1);
+//	tmp2.sort();
+	tmp2.sort(function(a, b) { return a - b; });
+	tmp2.forEach(function(item) { hinzufuegen(item,div2); });
+
+	summe(0);
+	aufgabeHinzufuegen();
+}
+
+function zeigen(event) {
+	if (event.target.className == "falsch" || event.target.className == "leer") {
+		// gesperrt
+	} else {
+		var v1 = aufgedeckt.text.replace("÷","/");
+		var v2 = event.target.innerHTML;
+		if (level==6){
+			v1 = questions.indexOf(v1);
+			v2 = answers.indexOf(v2);
+		} else {
+			v1 = eval(v1);
+			v2 = eval(v2);
+		}
+//		console.log(v1+" - "+v2);
+//		console.log(event.target);
+		if (v1 == v2) { // richtig
+			summe(v2);
+			event.target.removeEventListener('click', zeigen);
+			event.target.className = "richtig";
+			aufgedeckt.globalAlpha = 0.98;
+		} else { // falsch
+			summe(-v2);
+//			event.target.className = "falsch";
+			aufgedeckt.color = "red";
+			aufgedeckt.globalAlpha = 0.98;
+			aufgabeHinzufuegen();
+		}
+	}
+}
+
+// restart game with given level
+function restart(newLevel) {
+	myGameArea.stop();
+	myGameArea.init();
+	level = newLevel;
+
+	// mark button as selected
+	for (var i=0; i<bList.length; i++) {
+		var b = bList[i];
+		b.className = (i==level ? "selected" : "");
+	}
+	
+	newGame();
+	myGameArea.start();	
+}
+</script>
+</body>
+</html>
