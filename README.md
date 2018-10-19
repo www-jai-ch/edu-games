@@ -16,4 +16,5 @@ HTML, CSS, and JavaScript.
 ## Hints
 
 ## See a demo
+* [GitHub demo](https://www-jai-ch.github.io/edu-games/)
 * [Number Race Game](http://www.jai.ch/de/Spiele%20Zahlenrennen.html)
