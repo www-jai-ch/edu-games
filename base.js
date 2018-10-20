@@ -220,10 +220,10 @@ function arrRandElem(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
 // random image
 function imgHTML() {
-	return '<img src="Bilder\\'+bildArray[Math.floor(Math.random()*bildArray.length)] +'.png" />';
+	return '<img src="..\\Bilder\\'+bildArray[Math.floor(Math.random()*bildArray.length)] +'.png" />';
 }
 function imgEule() {
-	return '<img src="Bilder\\Eule.png" />';
+	return '<img src="..\\Bilder\\Eule.png" />';
 }
 // insert new node y after node x
 function insertAfter(x,y) {
