@@ -3,6 +3,78 @@
 // (c) 2018 Michael Zimmermann
 // --------------------------------------------------------
 
+const Texte = {
+ chk :	{de:"Prüfen"
+ 	,fr:"Tester"
+        ,it:"Controllare"
+        ,en:"Check"}
+ ,
+ math :	{de:"Mathematik"
+ 	,fr:"Mathématique"
+        ,it:"Mathematica"
+        ,en:"Mathematics"}
+ ,
+ next :	{de:"weiter"
+ 	,fr:"plus avant"
+        ,it:"avanti"
+        ,en:"next"}
+ ,
+ neu   :{de:"Neu"
+	,fr:"Neuf"
+	,it:"Nuovo"
+	,en:"New"}
+ ,
+ newTsk:{de:"Neue Aufgabe"
+	,fr:"Neuf"
+	,it:"Nuovo Questio"
+	,en:"New Task"}
+ ,
+ bravo: {de:"Bravo"
+	,fr:"Excellent"
+	,it:"Eccellente"
+	,en:"Excellent"}
+ ,
+ shffl: {de:"Mischen"
+	,fr:"Battre les cartes"
+	,it:"Fare il mazzo"
+	,en:"Shuffle"}
+ ,
+ Resultat: {de:"Resultat"
+	,fr:"résultat"
+	,it:"risultato"
+	,en:"Score"}
+ ,
+ richtig: {de:"richtig"
+	,fr:"correct"
+	,it:"corretamente"
+	,en:"correct"}
+ ,
+ falsch: {de:"falsch"
+	,fr:"erroné"
+	,it:"impropriamente"
+	,en:"wrong"}
+ ,
+ leer:  {de:"leer"
+	,fr:"vide"
+	,it:"vacante"
+	,en:"empty"}
+ ,
+ farben:{de:["rot","grün","blau"]
+	,fr:["rouge","vert","bleu"]
+	,it:["rosso","verde","azurro"]
+	,en:["red","green","blue"]}
+ ,
+ get : function get (key){
+	try {
+		return this[key][language];
+	}
+	catch(err) {
+		return err;
+	}
+ }
+};
+// -- end  text --
+
 const UNICODE = {richtig:" &#x2714;",falsch:" &#x274C;",waereRichtig:" &#x2713;",leer:" "}
 const CLASS = {
 	richtig:"richtig"
@@ -15,78 +87,6 @@ const CLASS = {
 }
 
 const bildArray = "Ente Fischli Giraffe Hund Kaninchen Katze Kuh Löwe Maus Schaf Tech Elefant".split(" ");
-
-const Texte = {
- chk :	{de:"Prüfen"
- 		,fr:"Tester"
-        ,it:"Controllare"
-        ,en:"Check"}
- ,
- math :	{de:"Mathematik"
- 		,fr:"Mathématique"
-        ,it:"Mathematica"
-        ,en:"Mathematics"}
- ,
- next :	{de:"weiter"
- 		,fr:"plus avant"
-        ,it:"avanti"
-        ,en:"next"}
- ,
- neu   :{de:"Neu"
-		,fr:"Neuf"
-		,it:"Nuovo"
-		,en:"New"}
- ,
- newTsk:{de:"Neue Aufgabe"
-		,fr:"Neuf"
-		,it:"Nuovo Questio"
-		,en:"New Task"}
- ,
- bravo: {de:"Bravo"
-		,fr:"Excellent"
-		,it:"Eccellente"
-		,en:"Excellent"}
- ,
- shffl: {de:"Mischen"
-		,fr:"Battre les cartes"
-		,it:"Fare il mazzo"
-		,en:"Shuffle"}
- ,
- Resultat: {de:"Resultat"
-		,fr:"résultat"
-		,it:"risultato"
-		,en:"Score"}
- ,
- richtig: {de:"richtig"
-		,fr:"correct"
-		,it:"corretamente"
-		,en:"correct"}
- ,
- falsch: {de:"falsch"
-		,fr:"erroné"
-		,it:"impropriamente"
-		,en:"wrong"}
- ,
- leer:  {de:"leer"
-		,fr:"vide"
-		,it:"vacante"
-		,en:"empty"}
- ,
- farben:{de:["rot","grün","blau"]
-	    ,fr:["rouge","vert","bleu"]
-		,it:["rosso","verde","azurro"]
-		,en:["red","green","blue"]
-		}
- ,
- get : function get (key){
-	try {
-		return this[key][language];
-	}
-	catch(err) {
-		return err;
-	}
- }
-};
 
 // home link
 var ersterKindknoten = document.body.firstChild;
