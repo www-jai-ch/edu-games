@@ -73,6 +73,17 @@ const Texte = {
 	}
  }
 };
+
+const namen = ["Andrea","Bob","Cindy","Dominique","Egon","Florin","Gabriel","Hugo"
+			,"Isa","Jule","Kim","Leo","Marlin","Nathan","Oskar","Peter"
+			,"Quentin","Robin","Sascha","Toni","Ursula","Veronica"
+			,"Wilfried","Xaver","Yael","Zoe"
+			];
+
+//const farben = Texte.get("farben"); // ["rot","grün","blau"];
+
+const faktor = ["nicht","einmal","doppelt","dreimal","viermal","fünfmal"];
+
 // -- end  text --
 
 const UNICODE = {richtig:" &#x2714;",falsch:" &#x274C;",waereRichtig:" &#x2713;",leer:" "}
@@ -251,6 +262,18 @@ function chkButton(callback){
 function newButton(callback){
 	return genButton("newTsk",callback);
 }
+
+// replace 
+function logiRepl(str,arr,prefix){
+	var result = str;
+//	console.log(result);
+	arr.forEach(function(item,i) {
+		var reg = new RegExp(prefix+i, 'g')
+		result = result.replace(reg,item);
+	});
+//	console.log(result);
+	return result;
+};
 
 // common --
 
