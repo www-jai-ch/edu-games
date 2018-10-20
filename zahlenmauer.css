@@ -1,0 +1,40 @@
+.uebung {
+	max-width: 1200px;
+}
+input {
+	width: 76px; 
+	margin: 2px;
+	text-align: center;
+	border:0;
+	font-size: large;
+}
+tr{
+	height: 32px;
+
+}
+td {
+	width: 80px;
+	text-align: center;
+	background-color: lightgreen;
+}
+.zm_ruler {
+	height: 2px;
+}
+.zm_empty {
+	width: 40px;
+	background-color: #f1f1f1; //	green;
+}
+@media only screen and (max-width: 600px) {
+	button {
+		padding: 4px 10px;
+	}
+	input {
+		width: 36px;
+	}
+	td {
+		width: 40px;
+	}
+	.zm_empty {
+		width: 20px;
+	}
+}
