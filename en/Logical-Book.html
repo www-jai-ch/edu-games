@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<head>
+	<title>Logical - Knobelaufgaben Buch</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" media="screen" href="../base.css"/>
+</head>
+<body>
+<h1>Logical - Buch</h1>
+<p>Wem gehört das Buch?</p>
+<ol id="aufgabentext">
+<li><b>#p1</b>s Buch liegt zwischen dem <b>#c2</b>en und dem <b>#c0</b>en Buch.</li>
+<li><b>#p2</b>s Buch ist nicht <b>#c0</b>.</li>
+<li>Das erste Buch gehört <b>#p0</b>.</li>
+<li>Wem gehört das <b>#c1</b>e Buch?</li>
+</ol>
+
+<div id="uebung">
+<table>
+<tr>
+<th>Position</th><th>1.</th><th>2.</th><th>3.</th>
+</tr>
+<tr>
+<th>Farbe</th><td><b>#c0</b></td><td><b>#c1</b></td><td><b>#c2</b></td>
+</tr>
+<tr>
+<th>Name</th><td><b>#p0</b></td><td><b>#p1</b></td><td><b>#p2</b></td>
+</tr>
+</table>
+</div>
+
+<script src="../base.js"></script>
+<script>
+var cols = subSet(Texte.get("farben"),3);
+var pers = subSet(namen,3);
+
+var str = aufgabentext.innerHTML;
+str = logiRepl(str, pers, '#p');;
+str = logiRepl(str, cols, '#c');
+aufgabentext.innerHTML = str;
+//
+var str = uebung.innerHTML;
+str = logiRepl(str, pers, '#p');;
+str = logiRepl(str, cols, '#c');
+uebung.innerHTML = str;
+
+</script>
+<script src="../uebung.js"></script>
+</body>
+
+</html>
