@@ -101,7 +101,7 @@ function auswahlUebung(elem){
 			einfachverwendung = temp.length == this.loesungList.length;
 		}
 	}
-	console.log(einfachverwendung)
+//	console.log(einfachverwendung)
 	//	uebu.auswahl_mischen = auswahl && auswahl.classList.contains("mischen");
 
 	if (aufgabentext) {
@@ -133,9 +133,9 @@ var aufgedeckt_ist_auswahl;
 
 var uebungen = document.getElementsByClassName("uebung");
 if (uebungen.length>0){
-	console.log(uebungen.length);
+//	console.log(uebungen.length);
 	for (var i=0; i<uebungen.length; i++) {
-		console.log(uebungen[i]);
+//		console.log(uebungen[i]);
 		var au = new auswahlUebung(uebungen[i]);
 	}
 } else {
@@ -143,10 +143,10 @@ if (uebungen.length>0){
 }
 
 var map = new Map();
-function mapInsert(aufgedeckt) {
+function mapInsert(target,aufgedeckt) {
 	if (einfachverwendung) {
 		aufgedeckt.classList.add("d");
-		map.set(event.target,aufgedeckt);
+		map.set(target,aufgedeckt);
 	}
 }
 function mapRemove(aufgedeckt) {
@@ -194,7 +194,7 @@ function zeigen(event, ist_auswahl, str) {
 			aufgedeckt = null;
 		} else {
 			mapRemove(event.target);
-			mapInsert(aufgedeckt);
+			mapInsert(event.target,aufgedeckt);
 			event.target.innerHTML = aufgedeckt.innerHTML;
 			event.target.classList.remove(CLASS.zeigen);
 			aufgedeckt.classList.remove(CLASS.zeigen);

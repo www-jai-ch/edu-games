@@ -2,24 +2,23 @@
 // Basismodul Javascript Uebungen
 // (c) 2018 Michael Zimmermann
 // --------------------------------------------------------
-
 const Texte = {
  chk :	{de:"Prüfen"
- 	,fr:"Tester"
-        ,it:"Controllare"
-        ,en:"Check"}
+	,fr:"Tester"
+	,it:"Controllare"
+	,en:"Check"}
  ,
  math :	{de:"Mathematik"
- 	,fr:"Mathématique"
-        ,it:"Mathematica"
-        ,en:"Mathematics"}
+	,fr:"Mathématique"
+	,it:"Mathematica"
+	,en:"Mathematics"}
  ,
  next :	{de:"weiter"
- 	,fr:"plus avant"
-        ,it:"avanti"
-        ,en:"next"}
+	,fr:"plus avant"
+	,it:"avanti"
+	,en:"next"}
  ,
- neu   :{de:"Neu"
+ neu	:{de:"Neu"
 	,fr:"Neuf"
 	,it:"Nuovo"
 	,en:"New"}
@@ -54,7 +53,7 @@ const Texte = {
 	,it:"impropriamente"
 	,en:"wrong"}
  ,
- leer:  {de:"leer"
+ leer:	{de:"leer"
 	,fr:"vide"
 	,it:"vacante"
 	,en:"empty"}
@@ -99,18 +98,101 @@ const CLASS = {
 
 const bildArray = "Ente Fischli Giraffe Hund Kaninchen Katze Kuh Löwe Maus Schaf Tech Elefant".split(" ");
 
-// home link
-var ersterKindknoten = document.body.firstChild;
-var jaiRef = document.createElement("a");
-jaiRef.href = "index.html";
-jaiRef.innerHTML = "jai.ch";
-if (ersterKindknoten == undefined) {
-	document.body.appendChild(jaiRef);	
-} else {
-	document.body.insertBefore(jaiRef,ersterKindknoten);	
-}
 // lang
+const lang = ["de","fr","it","en"];
 var language = document.documentElement.lang; // navigator.language.substring(0,2);
+
+// home link
+function aNode(href,name){
+	var a = document.createElement("a");
+	a.href = href;
+	a.innerHTML = name;
+	return a;
+};
+
+var ersterKindknoten = document.body.firstChild;
+var header = document.createElement("header");
+var div = document.createElement("div");
+var nav = document.createElement("nav");
+header.appendChild(div);
+div.appendChild(nav);
+
+
+const menulist = [
+	[
+		["Mathematik-Zahlenmauern-Addition.html","Zahlenmauern Addition"],
+		["Mathèmatiques-Pyramides-Addition.html","Mathèmatique"],
+        ["","Mathematica"],
+        ["","Mathematics"]
+	],
+	[
+			["Logical-Buch.html" ,"Wem gehört das Buch?"  ], // de
+			["Logical-Libre.html","Libre"				 ], // fr
+			["Logica-Libro.html" ,"Chi possiede il libro?"], // it
+			["Logical-Book.html" ,"Who owns the Book"	 ]  // en
+	],
+	[
+			["Logical-Drei-Ponys.html"	 ,"Drei Ponys"	   ], // de
+			["Logical-Les-trois-ponys.html","Les trois ponys"  ], // fr
+			["Logica-I-tre-pony.html"	  ,"I tre pony"	   ], // it
+			["Logical-Tree-ponies.html"	,"Three ponies"	 ]  // en
+	],
+	[
+			["Logical-Zebrarätsel.html" ,"Zebrarätsel"  ], // de
+			["Logical-Énigme-Zèbre.html","Énigme Zèbre" ], // fr
+			["Logica-Zebra.html"		,"Logica Zebra" ], // it
+			["Logical-Zebra.html"		,"Zebra Puzzle - Einstein's Riddle" ]  // en
+	]
+];
+
+var arr = decodeURI(location.pathname).split('/');
+var page = arr[arr.length-1];
+var mmm;
+var found = false;
+console.log("current page:"+page);
+for (var n=0; n<menulist.length && !found; n++){
+	mmm = menulist[n];
+	for (var i=0; i<mmm.length && !found; i++) {
+		console.log(mmm[i][0]);
+		if (mmm[i][0]==page) {
+			found = true;
+			console.log("found");
+		}
+	}
+}
+if(!found){
+	mmm = [["index.html"],["index.html"],["index.html"],["index.html"]];
+}
+
+function menuNode(lng,href,name){
+	var span = document.createElement("span");
+	var node;
+	if (lng==language) {
+		node = document.createTextNode(name);
+		span.classList.add("richtig");
+	} else {
+		if (lng==""){
+			node = aNode(href,name);
+		} else  {
+			node = aNode("../"+lng+"/"+href,name);
+		}
+	}
+	span.appendChild(node);
+	nav.appendChild(span);
+};
+
+menuNode(""  ,"index.html","jai.ch");
+menuNode("de",mmm[0][0],"deutsch");
+menuNode("fr",mmm[1][0],"français");
+menuNode("it",mmm[2][0],"italiano");
+menuNode("en",mmm[3][0],"english");
+
+
+if (ersterKindknoten == undefined) {
+	document.body.appendChild(header);	
+} else {
+	document.body.insertBefore(header,ersterKindknoten);	
+}
 
 // allgemein
 var uebung = document.getElementById("uebung");
@@ -360,7 +442,7 @@ function ergebnisClass() {
 		}
 
 		str += "<br/>"+this.richtig + " " + Texte.get("richtig") 
-		     + "<br/>"+this.falsch + " " + Texte.get("falsch") 
+			 + "<br/>"+this.falsch + " " + Texte.get("falsch") 
 			 + "<br/>"+this.leer + " " + Texte.get("leer") 
 			;
 		myModal.display(str);

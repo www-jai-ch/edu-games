@@ -35,10 +35,25 @@ button {
 span {
     border: 1px solid #aaaaaa;
     border-radius:4px;
+/*	margin-right:10px */
 }
-a {
+/* -- navigation -- */
+nav span {
+	margin-right:10px;
+}
+nav a:link, a:visited {
+    background-color: #eeeeee;
+    color: black;
+    text-decoration: none;
+}
+nav a:hover, a:active {
+    background-color: lightgray;
+}
+/* -- navigation end -- */
+
+/* a {
 	margin-right: 10px;
-}
+} */
 input:focus {
     background-color: lightblue;
 }
