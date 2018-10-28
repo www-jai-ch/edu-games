@@ -120,36 +120,38 @@ div.appendChild(nav);
 
 const menulist = [
 	[
-		["Mathematik-Zahlenmauern-Addition.html","Zahlenmauern Addition"],
-		["Mathèmatiques-Pyramides-Addition.html","Mathèmatique"],
-        ["","Mathematica"],
-        ["","Mathematics"]
+		["Mathematik-Zahlenmauern-Addition.html"	],
+		["Mathématiques-Pyramides-Addition.html"	],
+		["Mathematica-La-piramide-dell'-Addizione.html"	],
+		["Mathematics-Number-Pyramid-Addition.html"	]
 	],
 	[
-			["Logical-Buch.html" ,"Wem gehört das Buch?"  ], // de
-			["Logical-Libre.html","Libre"				 ], // fr
-			["Logica-Libro.html" ,"Chi possiede il libro?"], // it
-			["Logical-Book.html" ,"Who owns the Book"	 ]  // en
+		["Logical-Buch.html" 	], // de
+		["Logical-Livre.html"	], // fr
+		["Logica-Libro.html"	], // it
+		["Logical-Book.html"	]  // en
 	],
 	[
-			["Logical-Drei-Ponys.html"	 ,"Drei Ponys"	   ], // de
-			["Logical-Les-trois-ponys.html","Les trois ponys"  ], // fr
-			["Logica-I-tre-pony.html"	  ,"I tre pony"	   ], // it
-			["Logical-Tree-ponies.html"	,"Three ponies"	 ]  // en
+		["Logical-Drei-Ponys.html"	], // de
+		["Logical-Les-trois-ponys.html"	], // fr
+		["Logica-I-tre-pony.html"	], // it
+		["Logical-Tree-ponies.html"	]  // en
 	],
 	[
-			["Logical-Zebrarätsel.html" ,"Zebrarätsel"  ], // de
-			["Logical-Énigme-Zèbre.html","Énigme Zèbre" ], // fr
-			["Logica-Zebra.html"		,"Logica Zebra" ], // it
-			["Logical-Zebra.html"		,"Zebra Puzzle - Einstein's Riddle" ]  // en
+		["Logical-Zebrarätsel.html"	], // de
+		["Logical-Énigme-Zèbre.html"	], // fr
+		["Logica-Zebra.html"	], // it
+		["Logical-Zebra.html"	]  // en
 	]
 ];
 
 var arr = decodeURI(location.pathname).split('/');
 var page = arr[arr.length-1];
+var uriLang = arr[arr.length-2];
 var mmm;
 var found = false;
 console.log("current page:"+page);
+console.log("uriLang:"+uriLang);
 for (var n=0; n<menulist.length && !found; n++){
 	mmm = menulist[n];
 	for (var i=0; i<mmm.length && !found; i++) {
@@ -167,7 +169,7 @@ if(!found){
 function menuNode(lng,href,name){
 	var span = document.createElement("span");
 	var node;
-	if (lng==language) {
+	if (lng==uriLang) {
 		node = document.createTextNode(name);
 		span.classList.add("richtig");
 	} else {

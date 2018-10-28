@@ -7,9 +7,9 @@ const menu = {
 	},
 	logical_buch : [
 			["Logical-Buch.html" ,"Wem gehört das Buch?"  ], // de
-			["Logical-Libre.html","Libre"                 ], // fr
+			["Logical-Livre.html","Libre"                 ], // fr
 			["Logica-Libro.html" ,"Chi possiede il libro?"], // it
-			["Logical-Book.html" ,"Who owns the Book"     ]  // en
+			["Logical-Book.html" ,"Who owns the Book?"     ]  // en
 	],
 	logical_pony : [
 			["Logical-Drei-Ponys.html"     ,"Drei Ponys"       ], // de
