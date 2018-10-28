@@ -15,7 +15,7 @@ const menu = {
 			["Logical-Drei-Ponys.html"     ,"Drei Ponys"       ], // de
 			["Logical-Les-trois-ponys.html","Les trois ponys"  ], // fr
 			["Logica-I-tre-pony.html"      ,"I tre pony"       ], // it
-			["Logical-Tree-ponies.html"    ,"Three ponies"     ]  // en
+			["Logical-Three-ponies.html"    ,"Three ponies"     ]  // en
 	],
 	logical_zebra : [
 			["Logical-Zebrarätsel.html" ,"Zebrarätsel"  ], // de
