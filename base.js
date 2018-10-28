@@ -135,7 +135,7 @@ const menulist = [
 		["Logical-Drei-Ponys.html"	], // de
 		["Logical-Les-trois-ponys.html"	], // fr
 		["Logica-I-tre-pony.html"	], // it
-		["Logical-Tree-ponies.html"	]  // en
+		["Logical-Three-ponies.html"	]  // en
 	],
 	[
 		["Logical-Zebrarätsel.html"	], // de
